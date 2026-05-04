@@ -12,6 +12,7 @@ export default function LeftMenu() {
   const [engineType, setEngineType] = useState("");
   const [transmissionType, setTransmissionType] = useState("");
   const [drivetrainType, setDrivetrainType] = useState("");
+  const [system, setSystem] = useState("");
   
   const modelOptions = {
     Ford: ["Focus"],
@@ -58,6 +59,14 @@ export default function LeftMenu() {
     Dart : {SE : ["Front-Wheel Drive"], SXT : ["Front-Wheel Drive"], Aero : ["Front-Wheel Drive"], GT : ["Front-Wheel Drive"], Limited : ["Front-Wheel Drive"]}
   }
 
+  const systemOptions = {
+    "System" : ["Engine", "Transmission", "Drivetrain", "Fuel System", "Cooling System", "Electrical",
+      "Suspension", "Brakes", "Steering", "HVAC", "Exhaust", "Body/Interior", "Hybrid/EV High-Voltage", "ADAS/Sensors/Infotainment"
+    ]
+  }
+
+  // Test 
+
   function handleReset(){
     setMake("");
     setModel("");
@@ -66,6 +75,7 @@ export default function LeftMenu() {
     setEngineType("");
     setTransmissionType("");
     setDrivetrainType("");
+    setSystem("");
   }
   
   function handleMakeChange(e) {
@@ -75,6 +85,7 @@ export default function LeftMenu() {
     setEngineType(""); 
     setTransmissionType("");
     setDrivetrainType(""); 
+    setSystem("");
   }
 
   const handleModelChange = (e) =>{
@@ -99,6 +110,10 @@ export default function LeftMenu() {
 
   const handleDrivetrainTypeChange = (e) =>{
     setDrivetrainType(e.target.value);
+  }
+
+  const handleSystemChange = (e) =>{
+    setSystem(e.target.value);
   }
 
 
@@ -174,9 +189,10 @@ export default function LeftMenu() {
             (<option key={dt} value={dt}>{dt}</option>))}
         </select>
 
-        <select name="" id="">
-          <option value="" >System</option>
-
+        <select name="" id="" value = {system} onChange={handleSystemChange} disabled={!drivetrainType}>
+          <option value="" disabled hidden>System</option>
+          {drivetrainType && systemOptions["System"].map((s)=>
+          (<option key={s} value={s} >{s}</option>))}
         </select>
 
         <select name="" id="">
