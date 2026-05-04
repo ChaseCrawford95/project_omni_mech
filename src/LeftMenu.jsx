@@ -13,6 +13,7 @@ export default function LeftMenu() {
   const [transmissionType, setTransmissionType] = useState("");
   const [drivetrainType, setDrivetrainType] = useState("");
   const [system, setSystem] = useState("");
+  const [subSystem, setSubSystem] = useState("");
   
   const modelOptions = {
     Ford: ["Focus"],
@@ -65,7 +66,48 @@ export default function LeftMenu() {
     ]
   }
 
-  // Test 
+  const subSystemOptions = {
+    "Engine" : ["Intake System (airbox, throttle body, intake manifold)",
+      "Exhaust System (Engine‑side) (manifold, O2 sensors, turbo)",
+      "Fuel Delivery (Engine‑side) (injectors, rails, HPFP)",
+      "Ignition System (coils, plugs, wires)",
+      "Lubrication System (oil pump, pan, filter, galleries)",
+      "Cooling (Engine‑side) (water pump, thermostat, jackets)",
+      "Timing System (chain/belt, tensioners, VVT actuators)",
+      "Crankshaft / Pistons / Block Assembly",
+      "Cylinder Head / Valvetrain",
+      "Engine Sensors & Actuators (MAF, MAP, TPS, ECT, knock, cam/crank sensors)",
+      "Engine Control System (ECU, harness, grounds)",],
+    "Transmission" : ["Gear Train / Shafts",
+        "Clutch Assembly (Manual)",
+        "Torque Converter (Auto)",
+        "Valve Body / Mechatronics",
+        "Hydraulic System",
+        "Shift Linkage / Cables",
+        "Transmission Cooling",
+        "Transmission Sensors","TCM / Control Electronics","Differential (if integrated)",],
+    "Drivetrain" : ["Front Axle / CV Shafts", "Rear Axle / Half‑Shafts","Driveshaft / Prop Shaft",
+          "Transfer Case","Differentials (Front/Rear)","AWD Coupling / PTU","U‑Joints / Carrier Bearings",],
+    "Fuel System" : ["Fuel Tank","Fuel Pump (Low‑Pressure)","Fuel Pump (High‑Pressure)",
+          "Fuel Lines / Rails","EVAP System","Diesel Aftertreatment (DEF, SCR)","Fuel Filters / Water Separators", ],
+    "Cooling System" : ["Radiator / Condenser Stack", "Water Pump (Mechanical or Electric)","Thermostat / Coolant Valves","Cooling Hoses / Pipes",
+      "Engine Cooling Loop","Transmission Cooling Loop","Hybrid/EV Battery Cooling Loop","Inverter Cooling Loop",],
+    "Electrical" : ["Charging System (alternator, DC‑DC converter)", "Starting System (starter, solenoid)","Battery / Cables","Fuses / Relays / Junction Boxes","Wiring Harnesses",
+      "Grounds","Lighting (Exterior)","Lighting (Interior)","Instrument Cluster","Body Control Modules","CAN Bus / LIN Bus Networks",],
+    "Suspension" : ["Front Suspension Assembly", "Rear Suspension Assembly","Control Arms","Struts / Shocks","Springs","Bushings","Subframe / Crossmember","Stabilizer Bars / End Links",],
+    "Brakes" : ["Front Brakes","Rear Brakes","Brake Lines / Hoses","ABS System","Brake Booster / Master Cylinder","Parking Brake (Mechanical or Electronic)","Brake Control Module", ],
+    "Steering" : ["Steering Rack (Hydraulic or EPS)","Steering Column","Tie Rods / Ends","Power Steering Pump (Hydraulic)","EPS Motor / Module","Intermediate Shaft","Steering Angle Sensor", ],
+    "HVAC" : ["Heater Core", "Evaporator","Blower Motor","Blend Doors / Actuators","AC Compressor","AC Lines / Expansion Valve","Cabin Air Filtration",],
+    "Exhaust" : ["Exhaust Manifold","Catalytic Converter(s)","Downpipe","Muffler / Resonator","Exhaust Piping","O2 Sensors","DPF / SCR (Diesel)",],
+    "Body/Interior" : ["Doors / Windows / Regulators", "Seats / Seat Motors","Dashboard / Console","Airbags / SRS","Interior Trim","Exterior Trim","Mirrors","Sunroof / Roof Components",
+      "Locks / Latches","Wipers / Washers","Body Panels","HVAC Ducting","Infotainment Displays","Speakers / Amplifiers",],
+    "Hybrid/EV High-Voltage" : ["High‑Voltage Battery Pack", "Battery Management System (BMS)","Inverter / Converter","Electric Drive Motor(s)","Onboard Charger",
+      "DC‑DC Converter","HV Cables / Contactors","Thermal Management (Battery + Inverter)",],
+    "ADAS/Sensors/Infotainment" : ["Radar Sensors", "Camera Systems","Ultrasonic Sensors","LIDAR (if equipped)","ADAS Control Module",
+      "Lane‑Keep/ACC/AEB Systems","Telematics/Connectivity","Infotainment Head Unit","Navigation","Antenna Systems","Parking Assist","Blind Spot Monitoring",]
+
+      
+  }
 
   function handleReset(){
     setMake("");
@@ -76,6 +118,7 @@ export default function LeftMenu() {
     setTransmissionType("");
     setDrivetrainType("");
     setSystem("");
+    setSubSystem("");
   }
   
   function handleMakeChange(e) {
@@ -86,6 +129,7 @@ export default function LeftMenu() {
     setTransmissionType("");
     setDrivetrainType(""); 
     setSystem("");
+    setSubSystem("");
   }
 
   const handleModelChange = (e) =>{
@@ -114,6 +158,10 @@ export default function LeftMenu() {
 
   const handleSystemChange = (e) =>{
     setSystem(e.target.value);
+  }
+
+  const handleSubSystemChange = (e) =>{
+    setSubSystem(e.target.value);
   }
 
 
@@ -195,8 +243,11 @@ export default function LeftMenu() {
           (<option key={s} value={s} >{s}</option>))}
         </select>
 
-        <select name="" id="">
-          <option value="" >Sub-System</option>
+        <select name="" id="" value={subSystem} onChange={handleSubSystemChange} disabled={!system}>
+
+          <option value="" disabled hidden>Sub-System</option>
+          {system && subSystemOptions[system] && subSystemOptions[system].map((ss) =>
+          (<option key={ss} value={ss}>{ss}</option>))}
         </select>
 
         <select name="" id="">
